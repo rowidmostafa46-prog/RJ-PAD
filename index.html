@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RJ PAD |مكتبة الحرير</title>
+    <title>مكتبة الحرير | فخر الروايات العربية</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --bg: #050505; --accent: #8b0000; --text: #e0e0e0; --card: #121212; --gold: #ffd700; }
@@ -12,72 +12,64 @@
         .logo { font-size: 3.5rem; font-weight: 900; letter-spacing: 10px; text-shadow: 0 0 20px #ff0000; }
         .container { max-width: 1200px; margin: auto; padding: 20px; }
 
-        /* قسم شرح الرفع */
-        .tutorial-box { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); margin-bottom: 30px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1); }
-        .tutorial-box h3 { color: var(--gold); margin-top: 0; display: flex; align-items: center; gap: 10px; }
-        .tutorial-box p { font-size: 0.9rem; line-height: 1.6; color: #ccc; }
-        .guide-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
-        .step-card { background: #222; padding: 10px; border-radius: 8px; font-size: 0.85rem; border: 1px solid #333; }
-        .step-card b { color: var(--gold); display: block; margin-bottom: 5px; }
+        /* قسم شرح الرفع التفصيلي */
+        .tutorial-box { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); margin-bottom: 30px; }
+        .tutorial-box h3 { color: var(--gold); margin-top: 0; border-bottom: 1px solid #333; padding-bottom: 10px; }
+        .guide-content { display: flex; flex-direction: column; gap: 15px; }
+        .guide-step { background: #222; padding: 15px; border-radius: 10px; border-right: 4px solid var(--gold); }
+        .guide-step b { color: var(--gold); font-size: 1.1rem; display: block; margin-bottom: 5px; }
+        .guide-step code { background: #000; padding: 2px 5px; color: #ff4d4d; border-radius: 4px; }
 
         /* صندوق النشر */
         .publish-box { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid var(--accent); margin-bottom: 50px; display: none; }
         input, textarea { width: 100%; padding: 15px; margin: 10px 0; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; font-family: 'Cairo'; }
         #submitBtn { background: var(--accent); color: white; border: none; padding: 15px; cursor: pointer; font-weight: bold; border-radius: 8px; width: 100%; font-size: 1.2rem; transition: 0.3s; }
-        #submitBtn:hover { background: #ff0000; box-shadow: 0 0 15px #ff0000; }
 
         /* شبكة الروايات */
         .stories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
         .story-card { background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid #222; transition: 0.3s; }
-        .story-card:hover { transform: translateY(-5px); border-color: var(--accent); }
         .story-cover { width: 100%; height: 400px; object-fit: cover; }
         .story-info { padding: 20px; }
-        .story-title { font-size: 1.4rem; color: #ff4d4d; margin: 0; font-weight: 700; }
-        
-        .btn-read { display: block; background: #ff4d4d; color: #fff; text-align: center; padding: 12px; text-decoration: none; font-weight: bold; border-radius: 8px; margin-top: 15px; transition: 0.2s; }
-        .btn-read:hover { background: #fff; color: #ff4d4d; }
-        
-        .delete-btn { background: transparent; color: #666; border: 1px solid #333; padding: 5px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; font-size: 0.8rem; }
-        .delete-btn:hover { color: #ff0000; border-color: #ff0000; }
+        .btn-read { display: block; background: #ff4d4d; color: #fff; text-align: center; padding: 12px; text-decoration: none; font-weight: bold; border-radius: 8px; margin-top: 15px; }
+        .delete-btn { background: transparent; color: #ff4444; border: 1px solid #444; padding: 5px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; }
 
-        #loginBtn { background: #fff; color: #000; padding: 12px 30px; border-radius: 30px; cursor: pointer; border: none; font-weight: 900; margin-top: 20px; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
+        #loginBtn { background: #fff; color: #000; padding: 12px 30px; border-radius: 30px; cursor: pointer; border: none; font-weight: 900; margin-top: 20px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">RJ PAD</div>
-    <p>⚡ منصة الأساطير: اقرأ، انشر، وخلّد اسمك ⚡</p>
+    <div class="logo">مكتبة الحرير</div>
+    <p>⚡ نـسـج الكـلمـات.. وفـخـر الـروايـات ⚡</p>
     <button id="loginBtn">دخول المبدعين (Google)</button>
 </header>
 
 <div class="container">
     <div class="tutorial-box">
-        <h3>⚠️ كيف تضمن فتح روايتك للقراء؟</h3>
-        <p>الروابط العادية لا تعمل أحياناً. اتبع هذه الخطوات لضمان أن يقرأ الجميع عملك:</p>
-        <div class="guide-steps">
-            <div class="step-card">
-                <b>1. الرفع</b>
-                ارفع الـ PDF على Google Drive.
+        <h3>🚀 كيف تنشر عملك في مكتبة الحرير؟</h3>
+        <div class="guide-content">
+            <div class="guide-step">
+                <b>1️⃣ الخطوة الأولى: الرفع</b>
+                افتح تطبيق <b>Google Drive</b> واضغط على علامة <code>(+)</code> ثم ارفع ملف الـ PDF الخاص بك.
             </div>
-            <div class="step-card">
-                <b>2. الإذن (مهم!)</b>
-                اضغط Share واجعل الوصول <b>Anyone with the link</b>.
+            <div class="guide-step">
+                <b>2️⃣ الخطوة الثانية: إدارة الوصول</b>
+                اضغط على الثلاث نقاط بجانب الملف، اختر <b>Manage Access</b>، واجعل الخيار <b>"Anyone with the link"</b> لضمان فتحه للقراء.
             </div>
-            <div class="step-card">
-                <b>3. الرابط</b>
-                انسخ الرابط وضعه هنا. سيقوم موقعنا بمحاولة إصلاحه تلقائياً.
+            <div class="guide-step">
+                <b>3️⃣ الخطوة الثالثة: النشر</b>
+                انسخ الرابط وضعه في خانة "رابط ملف الـ PDF" بالأسفل. سنقوم بنسج عملك في المكتبة فوراً!
             </div>
         </div>
     </div>
 
     <div id="publishSection" class="publish-box">
-        <h2 style="text-align:center; color: var(--accent);">🖋️ لوحة النشر</h2>
-        <input type="text" id="title" placeholder="اسم الرواية">
-        <input type="text" id="cover" placeholder="رابط صورة الغلاف">
-        <input type="text" id="pdfLink" placeholder="رابط ملف الـ PDF من جوجل درايف">
-        <textarea id="idea" rows="3" placeholder="نبذة مشوقة عن القصة..."></textarea>
-        <button id="submitBtn">نشر الرواية الآن ⚡</button>
+        <h2 style="text-align:center; color: var(--accent);">🖋️ انشر روايتك الجديدة</h2>
+        <input type="text" id="title" placeholder="عنوان الرواية">
+        <input type="text" id="cover" placeholder="رابط غلاف الرواية">
+        <input type="text" id="pdfLink" placeholder="رابط Google Drive للملف">
+        <textarea id="idea" rows="3" placeholder="نبذة عن العمل..."></textarea>
+        <button id="submitBtn">تـعميد ونشر العمل ⚡</button>
     </div>
 
     <div id="storiesContainer" class="stories-grid"></div>
@@ -102,14 +94,11 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
-    // وظيفة ذكية لتصليح روابط جوجل درايف
     function fixDriveLink(url) {
         if (url.includes("drive.google.com")) {
-            const parts = url.split("/");
-            const idIndex = parts.indexOf("d") + 1;
-            if (idIndex > 0) {
-                const id = parts[idIndex];
-                return `https://drive.google.com/uc?export=view&id=${id}`;
+            const match = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+            if (match && match[1]) {
+                return `https://drive.google.com/uc?export=view&id=${match[1]}`;
             }
         }
         return url;
@@ -131,7 +120,7 @@
         const idea = document.getElementById('idea').value;
 
         if (title && cover && pdf && idea) {
-            pdf = fixDriveLink(pdf); // تصليح الرابط قبل الحفظ
+            pdf = fixDriveLink(pdf);
             await addDoc(collection(db, "stories"), {
                 title, cover, pdf, idea,
                 author: auth.currentUser.displayName,
@@ -139,9 +128,9 @@
                 views: 0,
                 createdAt: serverTimestamp()
             });
-            alert("تم النشر بنجاح! الرواية ستظهر فوراً.");
+            alert("تم النشر في مكتبة الحرير!");
             location.reload();
-        } else { alert("يرجى ملء كافة البيانات!"); }
+        } else { alert("يرجى ملء البيانات!"); }
     };
 
     onSnapshot(query(collection(db, "stories"), orderBy("createdAt", "desc")), (snap) => {
@@ -149,36 +138,32 @@
         container.innerHTML = '';
         snap.forEach((sDoc) => {
             const data = sDoc.data();
-            const sId = sDoc.id;
             const isOwner = auth.currentUser && auth.currentUser.uid === data.authorId;
-            
             container.innerHTML += `
                 <div class="story-card">
-                    <img src="${data.cover}" class="story-cover" onerror="this.src='https://via.placeholder.com/400x600/000/fff?text=RJ+PAD'">
+                    <img src="${data.cover}" class="story-cover" onerror="this.src='https://via.placeholder.com/400x600/000/fff?text=Silk+Library'">
                     <div class="story-info">
-                        <h3 class="story-title">${data.title}</h3>
-                        <p style="font-size:0.8rem; color:gray; margin-bottom:10px;">بواسطة: ${data.author}</p>
+                        <h3>${data.title}</h3>
+                        <p style="font-size:0.8rem; color:gray;">الكاتب: ${data.author}</p>
                         <div style="font-size:0.9rem; color:#bbb; height:45px; overflow:hidden;">${data.idea}</div>
-                        <div style="margin-top:10px; font-weight:bold;">👁️ المشاهدات: ${data.views || 0}</div>
-                        <a href="${data.pdf}" target="_blank" rel="noopener noreferrer" class="btn-read" onclick="window.safeView('${sId}')">📖 قراءة الرواية</a>
-                        ${isOwner ? `<button class="delete-btn" onclick="window.deleteStory('${sId}')">🗑️ حذف روايتي</button>` : ''}
+                        <div style="margin-top:10px;">👁️ القراءات: ${data.views || 0}</div>
+                        <a href="${data.pdf}" target="_blank" rel="noopener noreferrer" class="btn-read" onclick="window.safeView('${sDoc.id}')">📖 ابدأ القراءة</a>
+                        ${isOwner ? `<button class="delete-btn" onclick="window.deleteStory('${sDoc.id}')">🗑️ سحب العمل من المكتبة</button>` : ''}
                     </div>
                 </div>`;
         });
     });
 
     window.safeView = async (id) => {
-        const viewKey = 'v_' + id;
-        if (!sessionStorage.getItem(viewKey)) {
+        const key = 'v_' + id;
+        if (!sessionStorage.getItem(key)) {
             await updateDoc(doc(db, "stories", id), { views: increment(1) });
-            sessionStorage.setItem(viewKey, '1');
+            sessionStorage.setItem(key, '1');
         }
     };
 
     window.deleteStory = async (id) => {
-        if (confirm("حذف الرواية نهائياً؟")) {
-            await deleteDoc(doc(db, "stories", id));
-        }
+        if (confirm("هل تريد حذف هذا العمل من مكتبة الحرير؟")) { await deleteDoc(doc(db, "stories", id)); }
     };
 </script>
 </body>
