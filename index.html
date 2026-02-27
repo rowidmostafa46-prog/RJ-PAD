@@ -3,65 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RJ PAD | مملكـة الإبـداع</title>
+    <title>RJ PAD |مكتبة الحرير</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #050505; --accent: #8b0000; --text: #e0e0e0; --card: #121212; }
+        :root { --bg: #050505; --accent: #8b0000; --text: #e0e0e0; --card: #121212; --gold: #ffd700; }
         body { background-color: var(--bg); color: var(--text); font-family: 'Cairo', sans-serif; margin: 0; }
-        header { background: linear-gradient(135deg, #000, var(--accent)); padding: 50px 20px; text-align: center; border-bottom: 4px solid var(--accent); box-shadow: 0 5px 20px rgba(255,0,0,0.2); }
-        .logo { font-size: 4rem; font-weight: 900; letter-spacing: 10px; text-shadow: 0 0 20px #ff0000; margin: 0; }
+        header { background: linear-gradient(135deg, #000, var(--accent)); padding: 40px 20px; text-align: center; border-bottom: 4px solid var(--accent); }
+        .logo { font-size: 3.5rem; font-weight: 900; letter-spacing: 10px; text-shadow: 0 0 20px #ff0000; }
         .container { max-width: 1200px; margin: auto; padding: 20px; }
-        
-        .publish-box { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid var(--accent); margin-bottom: 50px; display: none; box-shadow: 0 0 30px rgba(139, 0, 0, 0.1); }
-        input, textarea, select { width: 100%; padding: 15px; margin: 10px 0; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 8px; font-family: 'Cairo'; box-sizing: border-box; }
-        .publish-box button { background: var(--accent); color: white; border: none; padding: 15px; cursor: pointer; font-weight: bold; border-radius: 8px; width: 100%; font-size: 1.2rem; transition: 0.3s; }
-        .publish-box button:hover { background: #ff0000; box-shadow: 0 0 20px #ff0000; }
 
-        .stories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 30px; }
-        .story-card { background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid #222; transition: 0.4s; position: relative; display: flex; flex-direction: column; }
-        .story-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        /* قسم شرح الرفع */
+        .tutorial-box { background: #1a1a1a; padding: 25px; border-radius: 15px; border: 1px solid var(--gold); margin-bottom: 30px; box-shadow: inset 0 0 10px rgba(255, 215, 0, 0.1); }
+        .tutorial-box h3 { color: var(--gold); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        .tutorial-box p { font-size: 0.9rem; line-height: 1.6; color: #ccc; }
+        .guide-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 15px; }
+        .step-card { background: #222; padding: 10px; border-radius: 8px; font-size: 0.85rem; border: 1px solid #333; }
+        .step-card b { color: var(--gold); display: block; margin-bottom: 5px; }
+
+        /* صندوق النشر */
+        .publish-box { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid var(--accent); margin-bottom: 50px; display: none; }
+        input, textarea { width: 100%; padding: 15px; margin: 10px 0; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 8px; box-sizing: border-box; font-family: 'Cairo'; }
+        #submitBtn { background: var(--accent); color: white; border: none; padding: 15px; cursor: pointer; font-weight: bold; border-radius: 8px; width: 100%; font-size: 1.2rem; transition: 0.3s; }
+        #submitBtn:hover { background: #ff0000; box-shadow: 0 0 15px #ff0000; }
+
+        /* شبكة الروايات */
+        .stories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .story-card { background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid #222; transition: 0.3s; }
+        .story-card:hover { transform: translateY(-5px); border-color: var(--accent); }
         .story-cover { width: 100%; height: 400px; object-fit: cover; }
+        .story-info { padding: 20px; }
+        .story-title { font-size: 1.4rem; color: #ff4d4d; margin: 0; font-weight: 700; }
         
-        .story-stats { display: flex; justify-content: space-around; padding: 10px; background: rgba(0,0,0,0.7); font-size: 0.85rem; border-bottom: 1px solid #222; }
-        .stat-item { display: flex; align-items: center; gap: 5px; }
-
-        .story-info { padding: 20px; flex-grow: 1; }
-        .story-title { font-size: 1.6rem; color: #ff4d4d; margin: 0 0 10px 0; font-weight: 900; }
-        .story-idea { font-size: 0.95rem; color: #bbb; line-height: 1.6; height: 60px; overflow: hidden; margin-bottom: 15px; }
+        .btn-read { display: block; background: #ff4d4d; color: #fff; text-align: center; padding: 12px; text-decoration: none; font-weight: bold; border-radius: 8px; margin-top: 15px; transition: 0.2s; }
+        .btn-read:hover { background: #fff; color: #ff4d4d; }
         
-        .actions { display: flex; gap: 10px; margin-bottom: 15px; }
-        .btn-action { flex: 1; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-family: 'Cairo'; transition: 0.2s; font-size: 0.9rem; }
-        .btn-like { background: #333; color: #ff4d4d; border: 1px solid #ff4d4d; }
-        .btn-read { background: #ff4d4d; color: #fff; text-decoration: none; text-align: center; line-height: 25px; }
+        .delete-btn { background: transparent; color: #666; border: 1px solid #333; padding: 5px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; font-size: 0.8rem; }
+        .delete-btn:hover { color: #ff0000; border-color: #ff0000; }
 
-        .rating-select { background: #111; color: gold; border: 1px solid #444; padding: 5px; border-radius: 5px; cursor: pointer; }
-
-        .comments-section { padding: 15px; background: #0a0a0a; border-top: 1px solid #222; max-height: 150px; overflow-y: auto; font-size: 0.85rem; }
-        .comment { margin-bottom: 8px; border-bottom: 1px solid #1a1a1a; padding-bottom: 5px; }
-        .comment b { color: var(--accent); }
-        
-        .comment-input-group { display: flex; gap: 5px; padding: 10px; background: #121212; }
-        .comment-input { flex: 1; padding: 10px; background: #000; border: 1px solid #333; color: #fff; border-radius: 4px; font-family: 'Cairo'; }
-
-        #loginBtn { background: #fff; color: #000; border: none; padding: 12px 25px; font-weight: 900; border-radius: 30px; cursor: pointer; margin-top: 20px; font-size: 1rem; }
+        #loginBtn { background: #fff; color: #000; padding: 12px 30px; border-radius: 30px; cursor: pointer; border: none; font-weight: 900; margin-top: 20px; box-shadow: 0 0 15px rgba(255,255,255,0.3); }
     </style>
 </head>
 <body>
 
 <header>
-    <h1 class="logo">RJ PAD</h1>
-    <p>⚡ حـيث تـولد الأسـاطير وتُـخلد الـروايات ⚡</p>
-    <button id="loginBtn">دخول المصلين للإبداع (Google)</button>
+    <div class="logo">RJ PAD</div>
+    <p>⚡ منصة الأساطير: اقرأ، انشر، وخلّد اسمك ⚡</p>
+    <button id="loginBtn">دخول المبدعين (Google)</button>
 </header>
 
 <div class="container">
+    <div class="tutorial-box">
+        <h3>⚠️ كيف تضمن فتح روايتك للقراء؟</h3>
+        <p>الروابط العادية لا تعمل أحياناً. اتبع هذه الخطوات لضمان أن يقرأ الجميع عملك:</p>
+        <div class="guide-steps">
+            <div class="step-card">
+                <b>1. الرفع</b>
+                ارفع الـ PDF على Google Drive.
+            </div>
+            <div class="step-card">
+                <b>2. الإذن (مهم!)</b>
+                اضغط Share واجعل الوصول <b>Anyone with the link</b>.
+            </div>
+            <div class="step-card">
+                <b>3. الرابط</b>
+                انسخ الرابط وضعه هنا. سيقوم موقعنا بمحاولة إصلاحه تلقائياً.
+            </div>
+        </div>
+    </div>
+
     <div id="publishSection" class="publish-box">
-        <h2 style="text-align:center; color: var(--accent);">🖋️ انشر عملك الجديد</h2>
-        <input type="text" id="title" placeholder="عنوان الرواية / المانجا">
-        <input type="text" id="cover" placeholder="رابط غلاف الرواية (URL)">
-        <input type="text" id="pdfLink" placeholder="رابط ملف الـ PDF للقراءة">
-        <textarea id="idea" rows="3" placeholder="نبذة مختصرة تشوق القراء..."></textarea>
-        <button id="submitBtn">تـعميد الرواية في المـخزن ⚡</button>
+        <h2 style="text-align:center; color: var(--accent);">🖋️ لوحة النشر</h2>
+        <input type="text" id="title" placeholder="اسم الرواية">
+        <input type="text" id="cover" placeholder="رابط صورة الغلاف">
+        <input type="text" id="pdfLink" placeholder="رابط ملف الـ PDF من جوجل درايف">
+        <textarea id="idea" rows="3" placeholder="نبذة مشوقة عن القصة..."></textarea>
+        <button id="submitBtn">نشر الرواية الآن ⚡</button>
     </div>
 
     <div id="storiesContainer" class="stories-grid"></div>
@@ -70,7 +86,7 @@
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, updateDoc, doc, arrayUnion, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, updateDoc, doc, increment, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCqosyyE5ievwHPrfa6oJL2FD7uAjY2Y5I",
@@ -86,6 +102,19 @@
     const db = getFirestore(app);
     const provider = new GoogleAuthProvider();
 
+    // وظيفة ذكية لتصليح روابط جوجل درايف
+    function fixDriveLink(url) {
+        if (url.includes("drive.google.com")) {
+            const parts = url.split("/");
+            const idIndex = parts.indexOf("d") + 1;
+            if (idIndex > 0) {
+                const id = parts[idIndex];
+                return `https://drive.google.com/uc?export=view&id=${id}`;
+            }
+        }
+        return url;
+    }
+
     document.getElementById('loginBtn').onclick = () => signInWithPopup(auth, provider);
 
     onAuthStateChanged(auth, (user) => {
@@ -98,86 +127,58 @@
     document.getElementById('submitBtn').onclick = async () => {
         const title = document.getElementById('title').value;
         const cover = document.getElementById('cover').value;
-        const pdf = document.getElementById('pdfLink').value;
+        let pdf = document.getElementById('pdfLink').value;
         const idea = document.getElementById('idea').value;
+
         if (title && cover && pdf && idea) {
+            pdf = fixDriveLink(pdf); // تصليح الرابط قبل الحفظ
             await addDoc(collection(db, "stories"), {
                 title, cover, pdf, idea,
                 author: auth.currentUser.displayName,
-                views: 0, likes: 0, ratingSum: 5, ratingCount: 1,
-                comments: [],
+                authorId: auth.currentUser.uid,
+                views: 0,
                 createdAt: serverTimestamp()
             });
-            alert("تم إطلاق الرواية بنجاح! ⚡");
+            alert("تم النشر بنجاح! الرواية ستظهر فوراً.");
             location.reload();
-        }
+        } else { alert("يرجى ملء كافة البيانات!"); }
     };
 
-    onSnapshot(query(collection(db, "stories"), orderBy("createdAt", "desc")), (snapshot) => {
+    onSnapshot(query(collection(db, "stories"), orderBy("createdAt", "desc")), (snap) => {
         const container = document.getElementById('storiesContainer');
         container.innerHTML = '';
-        snapshot.forEach((sDoc) => {
+        snap.forEach((sDoc) => {
             const data = sDoc.data();
             const sId = sDoc.id;
-            const avgRating = (data.ratingSum / data.ratingCount).toFixed(1);
+            const isOwner = auth.currentUser && auth.currentUser.uid === data.authorId;
             
-            const card = document.createElement('div');
-            card.className = 'story-card';
-            card.innerHTML = `
-                <img src="${data.cover}" class="story-cover" onerror="this.src='https://via.placeholder.com/400x600/000/fff?text=RJ+PAD'">
-                <div class="story-stats">
-                    <div class="stat-item">👁️ ${data.views || 0}</div>
-                    <div class="stat-item">❤️ ${data.likes || 0}</div>
-                    <div class="stat-item">⭐ ${avgRating}/5</div>
-                </div>
-                <div class="story-info">
-                    <h3 class="story-title">${data.title}</h3>
-                    <p class="story-idea">${data.idea}</p>
-                    <div class="actions">
-                        <button class="btn-action btn-like" onclick="window.likeStory('${sId}')">❤️ إعجاب</button>
-                        <select class="rating-select" onchange="window.rateStory('${sId}', this.value)">
-                            <option value="">⭐ قيم</option>
-                            <option value="5">5 نجوم</option>
-                            <option value="4">4 نجوم</option>
-                            <option value="3">3 نجوم</option>
-                            <option value="2">2 نجوم</option>
-                            <option value="1">نجمة واحدة</option>
-                        </select>
-                        <a href="${data.pdf}" target="_blank" class="btn-action btn-read" onclick="window.addView('${sId}')">📖 اقرأ</a>
+            container.innerHTML += `
+                <div class="story-card">
+                    <img src="${data.cover}" class="story-cover" onerror="this.src='https://via.placeholder.com/400x600/000/fff?text=RJ+PAD'">
+                    <div class="story-info">
+                        <h3 class="story-title">${data.title}</h3>
+                        <p style="font-size:0.8rem; color:gray; margin-bottom:10px;">بواسطة: ${data.author}</p>
+                        <div style="font-size:0.9rem; color:#bbb; height:45px; overflow:hidden;">${data.idea}</div>
+                        <div style="margin-top:10px; font-weight:bold;">👁️ المشاهدات: ${data.views || 0}</div>
+                        <a href="${data.pdf}" target="_blank" rel="noopener noreferrer" class="btn-read" onclick="window.safeView('${sId}')">📖 قراءة الرواية</a>
+                        ${isOwner ? `<button class="delete-btn" onclick="window.deleteStory('${sId}')">🗑️ حذف روايتي</button>` : ''}
                     </div>
-                </div>
-                <div class="comments-section">
-                    ${(data.comments || []).slice(-5).map(c => `<div class="comment"><b>${c.user}:</b> ${c.text}</div>`).join('')}
-                </div>
-                <div class="comment-input-group">
-                    <input type="text" class="comment-input" id="inp-${sId}" placeholder="علق كـأسطورة...">
-                    <button onclick="window.addComment('${sId}')" style="background:var(--accent); color:#fff; border:none; padding:5px 15px; border-radius:4px; cursor:pointer; font-family:'Cairo';">إرسال</button>
-                </div>
-            `;
-            container.appendChild(card);
+                </div>`;
         });
     });
 
-    // الوظائف العالمية
-    window.addView = async (id) => { await updateDoc(doc(db, "stories", id), { views: increment(1) }); };
-    window.likeStory = async (id) => { await updateDoc(doc(db, "stories", id), { likes: increment(1) }); };
-    window.rateStory = async (id, val) => {
-        if(val) {
-            await updateDoc(doc(db, "stories", id), { 
-                ratingSum: increment(Number(val)), 
-                ratingCount: increment(1) 
-            });
-            alert("شكراً لتقييمك!");
+    window.safeView = async (id) => {
+        const viewKey = 'v_' + id;
+        if (!sessionStorage.getItem(viewKey)) {
+            await updateDoc(doc(db, "stories", id), { views: increment(1) });
+            sessionStorage.setItem(viewKey, '1');
         }
     };
-    window.addComment = async (id) => {
-        const text = document.getElementById(`inp-${id}`).value;
-        if(text && auth.currentUser) {
-            await updateDoc(doc(db, "stories", id), {
-                comments: arrayUnion({ user: auth.currentUser.displayName, text: text })
-            });
-            document.getElementById(`inp-${id}`).value = '';
-        } else { alert("سجل دخول أولاً!"); }
+
+    window.deleteStory = async (id) => {
+        if (confirm("حذف الرواية نهائياً؟")) {
+            await deleteDoc(doc(db, "stories", id));
+        }
     };
 </script>
 </body>
