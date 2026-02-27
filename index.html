@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RJ PAD | مملكـة الإبـداع</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --accent: #8b0000;
+            --text: #ffffff;
+            --card: #151515;
+        }
+        body { background-color: var(--bg); color: var(--text); font-family: sans-serif; margin: 0; }
+        header { background: linear-gradient(to bottom, #000, var(--accent)); padding: 40px; text-align: center; border-bottom: 3px solid var(--accent); }
+        .logo { font-size: 3.5rem; font-weight: 900; letter-spacing: 8px; text-shadow: 0 0 15px #ff0000; }
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        
+        /* القوانين المزخرفة */
+        .rules { border: 2px dashed var(--accent); padding: 20px; border-radius: 15px; margin-bottom: 30px; background: rgba(139, 0, 0, 0.1); }
+        .rules h2 { color: #ff4d4d; text-align: center; }
+        
+        /* قسم النشر */
+        .publish-box { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid var(--accent); margin-bottom: 40px; display: none; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; background: #222; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
+        button { background: var(--accent); color: white; border: none; padding: 12px 30px; cursor: pointer; font-weight: bold; border-radius: 5px; width: 100%; font-size: 1.1rem; }
+        button:hover { background: #ff0000; box-shadow: 0 0 15px #ff0000; }
+
+        /* عرض الروايات */
+        .stories-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .story-card { background: var(--card); border: 1px solid #333; border-radius: 10px; overflow: hidden; }
+        .story-cover { width: 100%; height: 300px; object-fit: cover; }
+        .story-info { padding: 15px; }
+        .story-title { font-size: 1.3rem; color: #ff4d4d; margin-bottom: 5px; }
+        .story-idea { font-size: 0.9rem; color: #bbb; border-right: 3px solid var(--accent); padding-right: 10px; }
+        
+        #loginBtn { background: white; color: black; width: auto; margin: 20px auto; display: block; }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">RJ PAD</div>
+    <p>⚡ مـنـصـة الإبـداع والـخـيـال الـرعـدي ⚡</p>
+    <button id="loginBtn">التسجيل بواسطة Google</button>
+</header>
+
+<div class="container">
+    <div class="rules">
+        <h2>📜 دُسـتـور الـمـنـصـة 📜</h2>
+        <p>💀 مـمـنوع سـرقة الروايات؛ السارق يلاحق قانونياً.</p>
+        <p>🔞 مـمـنوع +18؛ النشر يعني الطرد الأبدي.</p>
+        <p>🖋️ ضـع فـكرة الرواية أسفل الغلاف دائماً.</p>
+    </div>
+
+    <div id="publishSection" class="publish-box">
+        <h3>✦ انشر أسطورتك الجديدة ✦</h3>
+        <input type="text" id="title" placeholder="عنوان الرواية / المانغا">
+        <input type="text" id="cover" placeholder="رابط صورة الغلاف (URL)">
+        <textarea id="idea" rows="4" placeholder="اكتب فكرة الرواية هنا (إجباري)"></textarea>
+        <button id="submitBtn">نشر الآن في RJ PAD ⚡</button>
+    </div>
+
+    <h3 style="border-bottom: 2px solid var(--accent); padding-bottom: 10px;">آخـر الإصـدارات</h3>
+    <div id="storiesContainer" class="stories-grid"></div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    // بيانات مشروعك الحقيقية
+    const firebaseConfig = {
+        apiKey: "AIzaSyCqosyyE5ievwHPrfa6oJL2FD7uAjY2Y5I",
+        authDomain: "rj-pad.firebaseapp.com",
+        projectId: "rj-pad",
+        storageBucket: "rj-pad.firebasestorage.app",
+        messagingSenderId: "160358264882",
+        appId: "1:160358264882:web:c243cda30c359266ed4c2b",
+        measurementId: "G-KVES8VFWMJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth();
+    const db = getFirestore(app);
+    const provider = new GoogleAuthProvider();
+
+    // تسجيل الدخول
+    document.getElementById('loginBtn').onclick = () => {
+        signInWithPopup(auth, provider).then(() => location.reload());
+    };
+
+    // التحقق من المستخدم
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('publishSection').style.display = 'block';
+        }
+    });
+
+    // النشر
+    document.getElementById('submitBtn').onclick = async () => {
+        const title = document.getElementById('title').value;
+        const cover = document.getElementById('cover').value;
+        const idea = document.getElementById('idea').value;
+
+        if (title && cover && idea) {
+            await addDoc(collection(db, "stories"), {
+                title, cover, idea,
+                author: auth.currentUser.displayName,
+                createdAt: serverTimestamp()
+            });
+            alert("تم النشر بنجاح!");
+            location.reload();
+        } else { alert("املأ كل الخانات!"); }
+    };
+
+    // عرض الروايات
+    const q = query(collection(db, "stories"), orderBy("createdAt", "desc"));
+    onSnapshot(q, (snapshot) => {
+        const container = document.getElementById('storiesContainer');
+        container.innerHTML = '';
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            container.innerHTML += `
+                <div class="story-card">
+                    <img src="${data.cover}" class="story-cover">
+                    <div class="story-info">
+                        <div class="story-title">${data.title}</div>
+                        <div class="story-idea">${data.idea}</div>
+                        <p style="font-size: 0.7rem; color: gray;">المؤلف: ${data.author}</p>
+                    </div>
+                </div>`;
+        });
+    });
+</script>
+</body>
+</html>
